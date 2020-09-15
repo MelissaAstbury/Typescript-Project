@@ -1,6 +1,8 @@
 import React from "react";
 import { Todo } from "./types";
 
+import "./TodoListItem.css";
+
 interface TodoListItemProps {
   todo: Todo;
 }
@@ -8,7 +10,7 @@ interface TodoListItemProps {
 export const TodoListItem: React.FC<TodoListItemProps> = ({ todo }) => {
   return (
     <li>
-      <label>
+      <label className={todo.complete ? "complete" : undefined}>
         <input type="checkbox" checked={todo.complete} />
         {todo.text}
       </label>
