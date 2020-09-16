@@ -18,7 +18,7 @@ export const TodoList: React.FC<TodoListProps> = ({
       {todos.map((todo) => {
         return (
           <TodoListItem
-            key={todo.text}
+            key={todo.id}
             todo={todo}
             todos={todos}
             setTodos={setTodos}

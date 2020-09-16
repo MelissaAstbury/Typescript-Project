@@ -18,10 +18,15 @@ export const TodoListItem: React.FC<TodoListItemProps> = ({
 }) => {
   const [input, setInput] = useState(todo.text);
   const [edit, setEdit] = useState(false);
+  const [checked, setChecked] = useState(todo.complete);
 
-  const handleSubmit = () => {
+  const updateTodo = (updateText: boolean) => {
     const foundIndex = todos.findIndex((item) => item.id === todo.id);
-    todos[foundIndex].text = input;
+    if (updateText) {
+      todos[foundIndex].text = input;
+    } else {
+      todos[foundIndex].complete = checked;
+    }
     setTodos(todos);
     setEdit(false);
   };
@@ -35,27 +40,34 @@ export const TodoListItem: React.FC<TodoListItemProps> = ({
       >
         Edit
       </button>
-      <button>Delete</button>
-      <label className={todo.complete ? "complete" : undefined}>
+      <label className={checked ? "complete" : undefined}>
         <input
           type="checkbox"
-          checked={todo.complete}
-          onChange={() => toggleTodo(todo)}
+          checked={checked}
+          onChange={() => {
+            setChecked(!checked);
+            updateTodo(false);
+          }}
         />
         {todo.text}
-        {edit && (
-          <>
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            />
-            <button type="submit" onClick={handleSubmit}>
-              Update Task
-            </button>
-          </>
-        )}
       </label>
+      {edit && (
+        <>
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              updateTodo(true);
+            }}
+          >
+            Update Task
+          </button>
+        </>
+      )}
     </li>
   );
 };
