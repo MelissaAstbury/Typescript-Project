@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { v4 } from "uuid";
 import { AddTodo, Todo } from "./types";
 
 interface AddTodoFormProps {
@@ -7,12 +8,14 @@ interface AddTodoFormProps {
 
 export const AddTodoForm: React.FC<AddTodoFormProps> = ({ addTodo }) => {
   const [newTodo, setNewTodo] = useState<Todo>({
+    id: v4(),
     text: "",
     complete: false,
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTodo({
+      id: newTodo.id,
       text: e.target.value,
       complete: false,
     });
@@ -21,7 +24,7 @@ export const AddTodoForm: React.FC<AddTodoFormProps> = ({ addTodo }) => {
   const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     addTodo(newTodo);
-    setNewTodo({ text: "", complete: false });
+    setNewTodo({ id: v4(), text: "", complete: false });
   };
 
   return (

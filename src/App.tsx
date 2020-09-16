@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import { v4 } from "uuid";
 import { TodoList } from "./TodoList";
-import { Todo, ToggleTodo, AddTodo } from "./types";
+import { Todo, ToggleTodo } from "./types";
 import { AddTodoForm } from "./AddTodoForm";
 
 const initialTodos: Array<Todo> = [
-  { text: "Paint nails", complete: false },
-  { text: "Water the plants", complete: true },
-  { text: "Cook a Sunday Roast", complete: false },
+  { id: v4(), text: "Paint nails", complete: false },
+  { id: v4(), text: "Water the plants", complete: false },
+  { id: v4(), text: "Cook a Sunday Roast", complete: false },
 ];
 
 const App: React.FC = () => {
@@ -30,12 +31,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <React.Fragment>
-        <TodoList todos={todos} toggleTodo={toggleTodo} />
-        <AddTodoForm addTodo={addTodo} />
-      </React.Fragment>
-    </div>
+    <React.Fragment>
+      <TodoList todos={todos} setTodos={setTodos} toggleTodo={toggleTodo} />
+      <AddTodoForm addTodo={addTodo} />
+    </React.Fragment>
   );
 };
 
